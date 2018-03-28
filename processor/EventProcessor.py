@@ -3,6 +3,7 @@ import time
 from alarm.Alarm import Alarm
 from analyzer.BaseAnalyzer import BaseAnalyzer
 from analyzer.PostureAnalyzer import PostureAnalyzer
+from analyzer.OdbParamsAnalyzer import OdbParamsAnalyzer 
 
 
 class EventProcessor(object):
