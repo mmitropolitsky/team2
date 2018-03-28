@@ -10,8 +10,7 @@ from analyzer.ObdParamsAnalyzer import ObdParamsAnalyzer
 
 
 class EventProcessor(object):
-    #__processors = [PostureAnalyzer(), ObdParamsAnalyzer()]
-    __processors = [ObdParamsAnalyzer()]
+    __processors = [PostureAnalyzer(), ObdParamsAnalyzer()]
 
     __alarm = Alarm()
 
@@ -25,16 +24,18 @@ class EventProcessor(object):
         print self.__dict
 
     def process(self):
-        i = 0
-        while i<15:
-            print 'invoking analyzers'
-            should_alarm = self.__should_alarm()
-            print should_alarm
-            if should_alarm:
-                print 'alarming'
-                self.__alarm.ring()
-            time.sleep(5)
-            i+=1
+        while True:
+            try:
+                print 'invoking analyzers'
+                should_alarm = self.__should_alarm()
+                print should_alarm
+                if should_alarm:
+                    print 'alarming'
+                    self.__alarm.ring()
+                time.sleep(5)
+            except:
+                break
+
         self.__finaly()
 
     def __finaly(self):
