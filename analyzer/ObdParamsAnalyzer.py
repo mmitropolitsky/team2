@@ -10,7 +10,7 @@ from adapter.ObdAdapter import ObdAdapter
 class ObdParamsAnalyzer(BaseAnalyzer):
 
     OBD_PARAMS = ['speed', 'throttle_pos', 'rpm', 'maf']
-    MIN_LAST_ENTRIES_COUNT = 1000
+    MIN_LAST_ENTRIES_COUNT = 50
 
     def __init__(self):
         self.__adapter = ObdAdapter()

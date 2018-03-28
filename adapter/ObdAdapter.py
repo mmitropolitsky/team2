@@ -6,7 +6,7 @@ class ObdAdapter:
     ODB_PARAMS = ['SPEED', 'RPM', 'THROTTLE_POS', 'MAF']
 
     def __init__(self):
-        self.__reader = obd.OBD('/dev/ttys010')
+        self.__reader = obd.OBD('/dev/ttys024')
         #self.__reader = obd.Async('/dev/ttys010')
         #for param in self.ODB_PARAMS:
         #    self.__reader.watch(obd.commands[param])
