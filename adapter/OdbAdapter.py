@@ -1,6 +1,7 @@
 import obd
 
-class OdbAdapter:
+
+class OdbAdapter(object):
 
     ODB_PARAMS = ['SPEED', 'RPM', 'THROTTLE_POS', 'MAF']
 
