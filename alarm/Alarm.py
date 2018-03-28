@@ -9,7 +9,8 @@ class Alarm(object):
     def ring(self):
         self.__alarm_counter += 1
         alarm_action = self.__alarm_action_factory.get_alarm_aciton(self.__alarm_counter)
-        alarm_action.do_action()
+        if alarm_action:
+            alarm_action.do_action()
 
     def reset_alarm(self):
         self.__alarm_counter = 0
