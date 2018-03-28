@@ -1,16 +1,16 @@
-from alarm.AlarmActionFactory import AlarmActionFactory
+from alarm.AlarmAction import AlarmAction
 
 
 class Alarm(object):
 
-    __alarm_counter = 0
-    __alarm_action_factory = AlarmActionFactory()
+    alarm_level = 0
+    __alarm_action = AlarmAction()
+
 
     def ring(self):
-        self.__alarm_counter += 1
-        alarm_action = self.__alarm_action_factory.get_alarm_aciton(self.__alarm_counter)
-        if alarm_action:
-            alarm_action.do_action()
+        self.alarm_level += 1
+        if self.__alarm_action:
+            self.__alarm_action.do_action(self)
 
     def reset_alarm(self):
-        self.__alarm_counter = 0
+        self.alarm_level = 0
