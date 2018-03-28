@@ -1,14 +1,16 @@
 import time
 
+import sqlite3
+
 from alarm.Alarm import Alarm
 
-from analyzer.OdbParamAnalyzer import OdbParamAnalyzer
-from analyzer.OdbSpeedAnalyzer import OdbSpeedAnalyzer
 from analyzer.PostureAnalyzer import PostureAnalyzer
+from analyzer.ObdParamsAnalyzer import ObdParamsAnalyzer
+
 
 
 class EventProcessor(object):
-    __processors = [PostureAnalyzer(), OdbSpeedAnalyzer(), OdbParamAnalyzer()]
+    __processors = [PostureAnalyzer(), ObdParamsAnalyzer()]
 
     __alarm = Alarm()
 
@@ -23,23 +25,29 @@ class EventProcessor(object):
 
     def process(self):
         while True:
-            print 'invoking analyzers'
-            should_alarm = self.__should_alarm()
-            print should_alarm
-            if should_alarm:
-                print 'alarming'
-                self.__alarm.ring()
-            time.sleep(5)
+            try:
+                print 'invoking analyzers'
+                should_alarm = self.__should_alarm()
+                print should_alarm
+                if should_alarm:
+                    print 'alarming'
+                    self.__alarm.ring()
+                time.sleep(5)
+            except:
+                break
+
+        self.__finaly()
+
+    def __finaly(self):
+        for instance in self.__processors:
+            instance.finalize()
 
     def __should_alarm(self):
         for instance in self.__processors:
-            print instance
             # maybe has the exception in the last 10-20 times?
             has_exception = instance.has_exception()
             # print dict[instance]
             self.__dict[instance.__hash__()].append(has_exception)
-            print instance
-
             if len(self.__dict[instance.__hash__()]) >= self.__num_exceptions_before_alarm:
                 return True
         return False
