@@ -1,5 +1,6 @@
 import time
 
+from analyzer.BaseAnalyzer import BaseAnalyzer
 from analyzer.PostureAnalyzer import PostureAnalyzer
 
 
@@ -8,11 +9,18 @@ class EventProcessor(object):
     def process(self):
         while True:
             print 'invoking analyzers'
-            print self.__invoke_analyzers()
-            self.__invoke_analyzers()
-            time.sleep(0.1)
+            print self.__should_alarm()
+            self.__should_alarm()
+            time.sleep(1)
 
-    def __invoke_analyzers(self):
-        a = PostureAnalyzer
-        return a.has_exception()
+    def __should_alarm(self):
+        subclasses = BaseAnalyzer.__subclasses__()
+        for cls in subclasses:
+            print cls
+            instance = cls()
+            if instance.has_exception():
+                return True
+        return False
+
+
 
